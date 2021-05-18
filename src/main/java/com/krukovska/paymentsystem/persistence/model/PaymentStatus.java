@@ -1,4 +1,4 @@
-package com.krukovska.paymentsystem.model;
+package com.krukovska.paymentsystem.persistence.model;
 
 import lombok.AllArgsConstructor;
 

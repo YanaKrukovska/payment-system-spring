@@ -1,4 +1,4 @@
-package com.krukovska.paymentsystem.model;
+package com.krukovska.paymentsystem.persistence.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,7 +37,7 @@ public class Account {
     private String iban;
 
     @OneToOne
-    @JoinColumn( foreignKey = @ForeignKey(name = "FK_CREDIT_CARD"))
+    @JoinColumn(foreignKey = @ForeignKey(name = "FK_CREDIT_CARD"))
     private CreditCard creditCard;
 
 }

@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<nav th:fragment="navigation" class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">Payment system</a>
+        </div>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/account/all">My accounts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/cards/all">My credit cards</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/payment/all">My payments</a>
+            </li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+            <li sec:authorize="!isAuthenticated()">
+                <a class="nav-link" href="/login">Login</a>
+            </li>
+            <li sec:authorize="isAuthenticated()">
+                <a class="nav-link" href="/logout">Log out</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<script>
+    $(document).ready(function () {
+        $('.dropdown-toggle').dropdown();
+    });
+</script>
+</html>

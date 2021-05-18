@@ -1,14 +1,17 @@
-package com.krukovska.paymentsystem.model;
+package com.krukovska.paymentsystem.persistence.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "payments")
 @Table(indexes = {@Index(columnList = "payment_date", name = "PAYMENT_DATE_INDEX"),
@@ -22,6 +25,9 @@ public class Payment {
     @ManyToOne
     @JoinColumn(name = "account_id", nullable = false, foreignKey = @ForeignKey(name = "FK_PAYMENT_ACCOUNT"))
     private Account account;
+
+    @Column(nullable = false)
+    private BigDecimal amount;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

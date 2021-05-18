@@ -1,15 +1,15 @@
-package com.krukovska.paymentsystem.model;
+package com.krukovska.paymentsystem.persistence.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Entity(name = "clients")
 public class Client {
 

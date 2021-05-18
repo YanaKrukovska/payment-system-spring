@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Oops</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="../static/css/error.css" th:href="@{/css/error.css}" rel="stylesheet"/>
+</head>
+<body>
+<div>
+    <img src="https://pbs.twimg.com/media/EMX9ColXYAAW438.jpg" width="400" height="350" alt="cursed-emoji">
+    <form class="info" th:action="@{/account/all}" method="get">
+        <h1 class="h3 mb-3 font-weight-normal" id="error-banner">Something went wrong!</h1>
+        <span class="text-info" th:text="${message}"></span>
+        <button type="submit" class="btn btn-primary">Return to the main page</button>
+    </form>
+</div>
+</body>
+</html>
