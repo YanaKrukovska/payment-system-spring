@@ -1,38 +1,39 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
 <nav th:fragment="navigation" class="navbar navbar-expand-sm navbar-dark bg-dark">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="/">Payment system</a>
+            <a class="navbar-brand" href="/" th:text="#{navbarHeader}"></a>
         </div>
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/account/all">My accounts</a>
+                <a class="nav-link" href="/account/all" th:text="#{myAccounts}"></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/cards/all">My credit cards</a>
+                <a class="nav-link" href="/cards/all" th:text="#{myCreditCards}"></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/payment/all">My payments</a>
+                <a class="nav-link" href="/payment/all" th:text="#{myPayments}"></a>
             </li>
         </ul>
-
         <ul class="nav navbar-nav navbar-right">
-            <li sec:authorize="!isAuthenticated()">
-                <a class="nav-link" href="/login">Login</a>
+            <li>
+                <a class="nav-link" href="/login" th:text="#{login}"></a>
             </li>
-            <li sec:authorize="isAuthenticated()">
-                <a class="nav-link" href="/logout">Log out</a>
+            <li>
+                <a class="nav-link" href="/signup" th:text="#{signup}"></a>
+            </li>
+            <li>
+                <a class="nav-link" href="/logout" th:text="#{logout}">L</a>
+            </li>
+            <li>
+                <a id="en-link" class="nav-link" th:href="@{''(lang=en)}">ENG</a>
+            </li>
+            <li>
+                <a id="ua-link" class="nav-link"  th:href="@{''(lang=ua)}">UA</a>
             </li>
         </ul>
     </div>
 </nav>
-
-<script>
-    $(document).ready(function () {
-        $('.dropdown-toggle').dropdown();
-    });
-</script>
 </html>
