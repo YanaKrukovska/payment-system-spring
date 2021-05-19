@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-import static com.krukovska.paymentsystem.controller.CardController.CLIENT_ID;
+import static com.krukovska.paymentsystem.util.Constants.CLIENT_ID;
 
 @Controller
 @RequestMapping("/account")

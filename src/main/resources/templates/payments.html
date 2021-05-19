@@ -12,9 +12,17 @@
 <table class="table">
     <thead class="thead-light">
     <tr>
-        <th scope="col" th:text="#{number}"></th>
+        <th>
+            <a th:href="@{/payment/all(size=${payPage.size}, page=${page}, sortField='id', sortDir=${reverseSortDir})}"
+               th:text="#{number}">
+            </a>
+        </th>
         <th scope="col" th:text="#{amount}"></th>
-        <th scope="col" th:text="#{paymentDate}"></th>
+        <th>
+            <a th:href="@{/payment/all(size=${payPage.size},  page=${page}, sortField='paymentDate',
+            sortDir=${reverseSortDir})}" th:text="#{paymentDate}">
+            </a>
+        </th>
         <th scope="col" th:text="#{receiverIban}"></th>
         <th scope="col" th:text="#{status}"></th>
         <th scope="col" th:text="#{details}"></th>
@@ -31,7 +39,8 @@
         <td class="align-middle"><span class="align-middle" th:text="${payment.status}"></span></td>
         <td class="align-middle"><span class="align-middle" th:text="${payment.details}"></span></td>
         <td class="align-middle"><span class="align-middle" th:text="${payment.account.name}"></span></td>
-        <td class="align-middle"><span class="align-middle" th:text="${payment.account.creditCard.cardNumber}"></span></td>
+        <td class="align-middle"><span class="align-middle" th:text="${payment.account.creditCard.cardNumber}"></span>
+        </td>
     </tr>
     </tbody>
 </table>
@@ -41,9 +50,9 @@
     <div class="col-md-8">
         <nav aria-label="Pagination">
             <ul class="pagination justify-content-center">
-                <li class="page-item" th:each="pageNumber : ${pageNumbers}" >
-                    <a class="page-link" th:href="@{/payment/all(size=${payPage.size}, page=${pageNumber})}"
-                       th:text="${pageNumber}">1</a>
+                <li class="page-item" th:each="pageNumber : ${pageNumbers}">
+                    <a class="page-link" th:href="@{/payment/all(size=${payPage.size}, page=${pageNumber},
+                   sortField=${sortField}, sortDir=${sortDir})}" th:text="${pageNumber}"></a>
                 </li>
             </ul>
         </nav>
