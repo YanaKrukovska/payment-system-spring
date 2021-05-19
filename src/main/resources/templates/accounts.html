@@ -21,21 +21,16 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="account, iStat : ${accountPage.content}">
+    <tr th:each="account : ${accounts}">
         <td class="align-middle"><span class="align-middle" th:text="${account.id}"></span></td>
         <td class="align-middle"><span class="align-middle" th:text="${account.name}"></span></td>
         <td class="align-middle"><span class="align-middle" th:text="${account.balance}"></span></td>
         <td class="align-middle"><span class="align-middle" th:text="${account.iban}"></span></td>
         <td class="align-middle"><span class="align-middle" th:text="${account.status}"></span></td>
-        <td class="align-middle"><span class="align-middle" th:text="${account.creditCard.cardNumber}"></span></td>
+        <td class="align-middle"><a class="align-middle" th:text="${account.creditCard.cardNumber}"
+                                       th:href="@{/card/{cardNumber}(cardNumber=${account.creditCard.cardNumber})}"></a></td>
     </tr>
     </tbody>
 </table>
-<div th:if="${accountPage.totalPages > 0}" class="pagination"
-     th:each="pageNumber : ${pageNumbers}">
-    <a th:href="@{/account/all(size=${accountPage.size}, page=${pageNumber})}"
-       th:text="${pageNumber}"
-       th:class="${pageNumber==accountPage.number + 1} ? active"></a>
-</div>
 </body>
 </html>

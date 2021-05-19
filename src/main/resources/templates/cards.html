@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+<div th:replace="fragments/navbar.html :: navigation"></div>
+
+<table class="table">
+    <thead class="thead-light">
+    <tr>
+        <th scope="col">Id</th>
+        <th scope="col" th:text="#{creditCard}"></th>
+        <th scope="col" th:text="#{isExpired}"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="card: ${cards}">
+        <td class="align-middle"><span class="align-middle" th:text="${card.id}"></span></td>
+        <td class="align-middle"><span class="align-middle" th:text="${card.cardNumber}"></span></td>
+        <td class="align-middle"><span class="align-middle" th:text="${card.isExpired}"></span></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

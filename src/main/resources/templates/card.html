@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Card</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        .info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10%;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="fragments/navbar.html :: navigation"></div>
+<div class="info">
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title"
+                th:text="${card.cardNumber}"></h5>
+            <h6 class="card-subtitle mb-2 text-muted" th:text="#{isExpired} + ': ' + ${card.isExpired}">></h6>
+        </div>
+    </div>
+</div>
+</body>
+</html>
