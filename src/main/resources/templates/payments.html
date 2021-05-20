@@ -12,15 +12,15 @@
 <table class="table">
     <thead class="thead-light">
     <tr>
-        <th>
-            <a th:href="@{/payment/all(size=${payPage.size}, page=${page}, sortField='id', sortDir=${reverseSortDir})}"
+        <th scope="col">
+            <a th:href="@{''(size=${payPage.size}, page=${page}, sortField='id', sortDir=${reverseSortDir})}"
                th:text="#{number}">
             </a>
         </th>
         <th scope="col" th:text="#{amount}"></th>
-        <th>
-            <a th:href="@{/payment/all(size=${payPage.size},  page=${page}, sortField='paymentDate',
-            sortDir=${reverseSortDir})}" th:text="#{paymentDate}">
+        <th scope="col">
+            <a th:href="@{''(size=${payPage.size},  page=${page}, sortField='paymentDate', sortDir=${reverseSortDir})}"
+               th:text="#{paymentDate}">
             </a>
         </th>
         <th scope="col" th:text="#{receiverIban}"></th>
@@ -45,19 +45,8 @@
     </tbody>
 </table>
 
-<div class="row" th:fragment="pagination">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
-        <nav aria-label="Pagination">
-            <ul class="pagination justify-content-center">
-                <li class="page-item" th:each="pageNumber : ${pageNumbers}">
-                    <a class="page-link" th:href="@{/payment/all(size=${payPage.size}, page=${pageNumber},
-                   sortField=${sortField}, sortDir=${sortDir})}" th:text="${pageNumber}"></a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-    <div class="col-md-2"></div>
-</div>
+<div th:replace="fragments/pagination.html :: pagination(pageNumbers=${pageNumbers}, pageSize=${payPage.size},
+ sortField=${sortField}, sortDir=${sortDir})"></div>
+
 </body>
 </html>
