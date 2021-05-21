@@ -14,15 +14,19 @@ public class ModelHelper {
     private ModelHelper() {
     }
 
-    public static void setPaginationAttributes(Model model,
-                                               Optional<Integer> pageNumber,
-                                               Optional<String> sortField,
-                                               Optional<String> sortDir,
-                                               Page<?> page) {
+    public static void setSortingPaginationAttributes(Model model,
+                                                      Optional<Integer> pageNumber,
+                                                      Optional<String> sortField,
+                                                      Optional<String> sortDir,
+                                                      Page<?> page) {
         model.addAttribute("sortDir", sortDir.orElse(DEFAULT_SORTING_ORDER));
         model.addAttribute("reverseSortDir", sortDir.map(s -> "asc".equals(s) ? "desc" : "asc")
                 .orElse(DEFAULT_REVERSE_SORTING_ORDER));
         model.addAttribute("sortField", sortField.orElse(DEFAULT_SORTING_FIELD));
+        setPaginationAttributes(model, pageNumber, page);
+    }
+
+    public static void setPaginationAttributes(Model model, Optional<Integer> pageNumber, Page<?> page) {
         model.addAttribute("page", pageNumber.orElse(DEFAULT_CURRENT_PAGE));
 
         int totalPages = page.getTotalPages();

@@ -1,6 +1,7 @@
 package com.krukovska.paymentsystem.service;
 
 import com.krukovska.paymentsystem.persistence.model.Account;
+import com.krukovska.paymentsystem.persistence.model.AccountStatus;
 import com.krukovska.paymentsystem.persistence.model.Response;
 import com.krukovska.paymentsystem.persistence.repository.AccountRepository;
 import com.krukovska.paymentsystem.util.SortHelper;
@@ -39,7 +40,7 @@ public class AccountService {
     }
 
     public Response<Account> topUpAccount(String accountId, double amount) {
-        Account account = findAccountById(accountId);
+        var account = findAccountById(accountId);
 
         if (account == null) {
             return new Response<>(null, Collections.singletonList("Account doesn't exist"));
@@ -52,5 +53,20 @@ public class AccountService {
         account.setBalance(account.getBalance().add(BigDecimal.valueOf(amount)));
 
         return new Response<>(accountRepository.save(account), new LinkedList<>());
+    }
+
+    public Response<Account> blockAccount(String accountId) {
+        var account = findAccountById(accountId);
+
+        if (account == null) {
+            return new Response<>(null, Collections.singletonList("Account doesn't exist"));
+        }
+
+        account.setStatus(AccountStatus.BLOCKED);
+        return new Response<>(accountRepository.save(account), new LinkedList<>());
+    }
+
+    public void updateAccount(Account account) {
+        accountRepository.save(account);
     }
 }

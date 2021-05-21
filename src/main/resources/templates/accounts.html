@@ -8,7 +8,10 @@
 </head>
 <body>
 <div th:replace="fragments/navbar.html :: navigation"></div>
-
+<div class="errors-div" th:if="${errors != null}" th:each="error : ${errors}">
+    <div class="alert alert-danger" role="alert" th:text="${error}">
+    </div>
+</div>
 <table class="table">
     <thead class="thead-light">
     <tr>
@@ -32,6 +35,8 @@
         <th scope="col" th:text="#{creditCard}"></th>
         <th scope="col"></th>
         <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
     </tr>
     </thead>
     <tbody>
@@ -45,15 +50,27 @@
                                     th:href="@{/card/{cardNumber}(cardNumber=${account.creditCard.cardNumber})}"></a>
         </td>
         <td>
-            <form th:action="@{/account/topup}" method="get">
+            <form th:if="${account.status.name == 'ACTIVE'}" th:action="@{/account/topup}" method="get">
                 <input type="hidden" name="accountId" th:value="${account.id}">
                 <button type="submit" class="btn btn-success" th:text="#{topUp}"></button>
             </form>
         </td>
         <td>
-            <form th:action="@{/payment/add}" method="get">
+            <form th:if="${account.status.name == 'ACTIVE'}" th:action="@{/payment/add}" method="get">
                 <input type="hidden" name="accountId" th:value="${account.id}">
                 <button type="submit" class="btn btn-primary" th:text="#{createPayment}"></button>
+            </form>
+        </td>
+        <td>
+            <form th:if="${account.status.name == 'ACTIVE'}" th:action="@{/account/block}" method="post">
+                <input type="hidden" name="accountId" th:value="${account.id}">
+                <button type="submit" class="btn btn-danger" th:text="#{blockAccount}"></button>
+            </form>
+        </td>
+        <td>
+            <form th:if="${account.status.name == 'BLOCKED'}" th:action="@{/request/add}" method="post">
+                <input type="hidden" name="accountId" th:value="${account.id}">
+                <button type="submit" class="btn btn-warning" th:text="#{unblockAccount}"></button>
             </form>
         </td>
     </tr>

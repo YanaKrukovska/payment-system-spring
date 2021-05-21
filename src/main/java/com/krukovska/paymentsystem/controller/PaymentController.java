@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Optional;
 
 import static com.krukovska.paymentsystem.util.Constants.CLIENT_ID;
-import static com.krukovska.paymentsystem.util.ModelHelper.setPaginationAttributes;
+import static com.krukovska.paymentsystem.util.ModelHelper.setSortingPaginationAttributes;
 
 @Controller
 @RequestMapping("/payment")
@@ -35,7 +35,7 @@ public class PaymentController {
                                        @RequestParam("sortDir") Optional<String> sortDir) {
         Page<Payment> payPage = paymentService.findAllClientPayments(CLIENT_ID, page, size, sortField, sortDir);
         model.addAttribute("payPage", payPage);
-        setPaginationAttributes(model, page, sortField, sortDir, payPage);
+        setSortingPaginationAttributes(model, page, sortField, sortDir, payPage);
         return "payments";
     }
 

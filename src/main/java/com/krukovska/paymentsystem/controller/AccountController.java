@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 import static com.krukovska.paymentsystem.util.Constants.CLIENT_ID;
-import static com.krukovska.paymentsystem.util.ModelHelper.setPaginationAttributes;
+import static com.krukovska.paymentsystem.util.ModelHelper.setSortingPaginationAttributes;
 
 @Controller
 @RequestMapping("/account")
@@ -31,7 +31,7 @@ public class AccountController {
 
         Page<Account> accPage = accountService.findAllClientAccounts(CLIENT_ID, page, size, sortField, sortDir);
         model.addAttribute("accountPage", accPage);
-        setPaginationAttributes(model, page, sortField, sortDir, accPage);
+        setSortingPaginationAttributes(model, page, sortField, sortDir, accPage);
         return "accounts";
     }
 
@@ -43,12 +43,22 @@ public class AccountController {
 
     @PostMapping("/topup")
     public String topUpAccount(Model model, @RequestParam String accountId, @ModelAttribute("amount") double amount) {
-        Response<Account> errors = accountService.topUpAccount(accountId, amount);
+        Response<Account> updateResponse = accountService.topUpAccount(accountId, amount);
 
-        if (!errors.isOkay()){
-            model.addAttribute("errors", errors.getErrors());
+        if (!updateResponse.isOkay()) {
+            model.addAttribute("errors", updateResponse.getErrors());
             return "account-topup";
         }
+        return "redirect:/account/all";
+    }
+
+    @PostMapping("/block")
+    public String blockAccount(Model model, @RequestParam String accountId) {
+        Response<Account> updateResponse = accountService.blockAccount(accountId);
+        if (!updateResponse.isOkay()) {
+            model.addAttribute("errors", updateResponse.getErrors());
+        }
+
         return "redirect:/account/all";
     }
 }
