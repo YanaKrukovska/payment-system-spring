@@ -1,6 +1,8 @@
 package com.krukovska.paymentsystem.controller;
 
 import com.krukovska.paymentsystem.persistence.model.Payment;
+import com.krukovska.paymentsystem.persistence.model.PaymentStatus;
+import com.krukovska.paymentsystem.service.AccountService;
 import com.krukovska.paymentsystem.service.PaymentService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -19,9 +21,11 @@ import static com.krukovska.paymentsystem.util.ModelHelper.setPaginationAttribut
 public class PaymentController {
 
     private final PaymentService paymentService;
+    private final AccountService accountService;
 
-    public PaymentController(PaymentService paymentService) {
+    public PaymentController(PaymentService paymentService, AccountService accountService) {
         this.paymentService = paymentService;
+        this.accountService = accountService;
     }
 
     @GetMapping("/all")
@@ -33,5 +37,12 @@ public class PaymentController {
         model.addAttribute("payPage", payPage);
         setPaginationAttributes(model, page, sortField, sortDir, payPage);
         return "payments";
+    }
+
+    @GetMapping("/add")
+    public String getPaymentCreationPage(Model model, @RequestParam String accountId) {
+        model.addAttribute("account", accountService.findAccountById(accountId));
+        model.addAttribute("statuses", PaymentStatus.values());
+        return "payment-add";
     }
 }

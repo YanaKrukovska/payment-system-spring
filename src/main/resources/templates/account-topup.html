@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add entry</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="../static/css/form.css" th:href="@{/css/form.css}" rel="stylesheet"/>
+</head>
+<body>
+<div th:replace="fragments/navbar.html :: navigation"></div>
+<div class="custom-form">
+
+    <form th:action="@{/account/topup}" method="post">
+
+        <h2 class="text-center" th:text="#{accountTopUp}"></h2>
+
+        <div class="form-group">
+            <label for="amount" th:text="#{amount}"> </label>
+            <input id="amount" type="number" step="0.01" min="0" class="form-control" name="amount" required>
+        </div>
+        <input type="hidden" name="accountId" th:value="${accountId}">
+        <div class="form-group">
+            <button type="submit" class="btn btn-success btn-block">Top Up</button>
+        </div>
+    </form>
+    <div class="errors-div" th:if="${errors != null}" th:each="error : ${errors}">
+        <div class="alert alert-danger" role="alert" th:text="${error}">
+        </div>
+    </div>
+</div>
+</body>
+</html>

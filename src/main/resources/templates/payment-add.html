@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add entry</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="../static/css/form.css" th:href="@{/css/form.css}" rel="stylesheet"/>
+</head>
+<body>
+<div th:replace="fragments/navbar.html :: navigation"></div>
+<div class="custom-form">
+
+    <form th:action="@{/payment/add}" method="post">
+
+        <h2 class="text-center" th:text="#{createPayment}"></h2>
+
+        <div class="form-group">
+            <label for="amount" th:text="#{amount}"> </label>
+            <input id="amount" type="number" step="0.1" min="0" class="form-control" name="amount" required>
+        </div>
+        <div class="form-group">
+            <label for="receiverIban" th:text="#{receiverIban}"> </label>
+            <input id="receiverIban" type="text" class="form-control" name="receiverIban">
+        </div>
+        <div class="form-group">
+            <label for="details" th:text="#{details}"> </label>
+            <input id="details" type="text" class="form-control" name="details">
+        </div>
+        <div class="form-group">
+            <label for="statusNumber"  th:text="#{status}">:</label>
+            <select class="form-control" id="statusNumber" name="statusNumber">
+                <option th:each="status : ${statuses}" th:value="${status.ordinal()}"
+                        th:text="${status.getName()}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-success btn-block">Save</button>
+        </div>
+    </form>
+
+</div>
+</body>
+</html>

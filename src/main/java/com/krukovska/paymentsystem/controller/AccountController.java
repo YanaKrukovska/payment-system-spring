@@ -1,13 +1,12 @@
 package com.krukovska.paymentsystem.controller;
 
 import com.krukovska.paymentsystem.persistence.model.Account;
+import com.krukovska.paymentsystem.persistence.model.Response;
 import com.krukovska.paymentsystem.service.AccountService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -34,5 +33,22 @@ public class AccountController {
         model.addAttribute("accountPage", accPage);
         setPaginationAttributes(model, page, sortField, sortDir, accPage);
         return "accounts";
+    }
+
+    @GetMapping("/topup")
+    public String getTopUpPage(Model model, @RequestParam String accountId) {
+        model.addAttribute("accountId", accountId);
+        return "account-topup";
+    }
+
+    @PostMapping("/topup")
+    public String topUpAccount(Model model, @RequestParam String accountId, @ModelAttribute("amount") double amount) {
+        Response<Account> errors = accountService.topUpAccount(accountId, amount);
+
+        if (!errors.isOkay()){
+            model.addAttribute("errors", errors.getErrors());
+            return "account-topup";
+        }
+        return "redirect:/account/all";
     }
 }
