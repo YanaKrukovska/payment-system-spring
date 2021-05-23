@@ -30,14 +30,14 @@
         <td class="align-middle"><span class="align-middle" th:if="${request.actionDate != null}"
                                        th:text="${request.actionDate}"></span></td>
         <td>
-            <form th:if="${request.actionDate == null}" th:action="@{/request/accept}" method="post">
-                <input type="hidden" name="requestId" th:value="${request.id}">
+            <form th:if="${request.actionDate == null}"
+                  th:action="@{/request/accept/{requestId}(requestId=${request.id})}" method="post">
                 <button type="submit" class="btn btn-success" th:text="#{accept}"></button>
             </form>
         </td>
         <td>
-            <form th:if="${request.actionDate == null}" th:action="@{/request/decline}" method="post">
-                <input type="hidden" name="requestId" th:value="${request.id}">
+            <form th:if="${request.actionDate == null}"
+                  th:action="@{/request/decline/{requestId}(requestId=${request.id})}" method="post">
                 <button type="submit" class="btn btn-danger" th:text="#{decline}"></button>
             </form>
         </td>

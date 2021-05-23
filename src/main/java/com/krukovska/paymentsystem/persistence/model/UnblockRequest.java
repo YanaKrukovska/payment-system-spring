@@ -10,19 +10,19 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity(name = "requests")
-public class Request {
+@Entity(name = "unblock_requests")
+public class UnblockRequest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "client_id", nullable = false, foreignKey = @ForeignKey(name = "FK_REQUEST_CLIENT"))
+    @JoinColumn(name = "client_id", nullable = false, foreignKey = @ForeignKey(name = "FK_UNBLOCK_REQUEST_CLIENT"))
     private Client client;
 
     @ManyToOne
-    @JoinColumn(name = "account_id", nullable = false, foreignKey = @ForeignKey(name = "FK_REQUEST_ACCOUNT"))
+    @JoinColumn(name = "account_id", nullable = false, foreignKey = @ForeignKey(name = "FK_UNBLOCK_REQUEST_ACCOUNT"))
     private Account account;
 
     @Column(nullable = false)

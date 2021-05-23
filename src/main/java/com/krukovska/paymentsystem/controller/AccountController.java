@@ -2,7 +2,7 @@ package com.krukovska.paymentsystem.controller;
 
 import com.krukovska.paymentsystem.persistence.model.Account;
 import com.krukovska.paymentsystem.persistence.model.Response;
-import com.krukovska.paymentsystem.service.AccountServiceImpl;
+import com.krukovska.paymentsystem.service.impl.AccountServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,20 +39,30 @@ public class AccountController {
     }
 
     @GetMapping("/topup/{accountId}")
-    //TODO can accountId be  a path param?
     public String getTopUpPage(Model model, @PathVariable Long accountId) {
-        //TODO validate input params
+
+        if (accountId == null) {
+            //TODO add localization
+            model.addAttribute("message", "Account ID must be not empty");
+            return "error";
+        }
+
+        var account = accountService.findAccountById(accountId);
+        if (account == null) {
+            //TODO add localization
+            model.addAttribute("message", "Account doesn't exist");
+            return "error";
+        }
+
         model.addAttribute("accountId", accountId);
         return "account-topup";
     }
 
-    @PostMapping("/topup")
-    //TODO can accountId be  a path param?
-    public String topUpAccount(Model model, @RequestParam Long accountId, @ModelAttribute("amount") double amount) {
-        //TODO can we avoid double?
+    @PostMapping("/topup/{accountId}")
+    public String topUpAccount(Model model, @PathVariable Long accountId, @ModelAttribute("amount") double amount) {
 
-        List<String> errors  = new ArrayList<>();
-        if (accountId == null ) {
+        List<String> errors = new ArrayList<>();
+        if (accountId == null) {
             //TODO add localization
             errors.add("Account ID must be not empty");
         }
@@ -70,19 +80,18 @@ public class AccountController {
         }
 
         if (errors.isEmpty()) {
-            return "account-topup";
+            return "redirect:/account/all";
         } else {
             model.addAttribute("errors", errors);
-            return "redirect:/account/all";
+            return "account-topup";
         }
 
     }
 
-    @PostMapping("/block")
-    //TODO can accountId be a path param?
-    public String blockAccount(Model model, @RequestParam Long accountId) {
-        List<String> errors  = new ArrayList<>();
-        if (accountId == null ) {
+    @PostMapping("/block/{accountId}")
+    public String blockAccount(Model model, @PathVariable Long accountId) {
+        List<String> errors = new ArrayList<>();
+        if (accountId == null) {
             //TODO add localization
             errors.add("Account ID must be not empty");
         }
@@ -92,11 +101,11 @@ public class AccountController {
                 errors.addAll(updateResponse.getErrors());
             }
         }
+
         model.addAttribute("errors", errors);
 
         return "redirect:/account/all";
     }
-
 
 
 }

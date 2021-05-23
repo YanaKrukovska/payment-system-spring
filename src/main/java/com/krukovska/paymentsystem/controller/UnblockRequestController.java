@@ -1,15 +1,12 @@
 package com.krukovska.paymentsystem.controller;
 
-import com.krukovska.paymentsystem.persistence.model.Request;
 import com.krukovska.paymentsystem.persistence.model.Response;
-import com.krukovska.paymentsystem.service.RequestService;
+import com.krukovska.paymentsystem.persistence.model.UnblockRequest;
+import com.krukovska.paymentsystem.service.impl.UnblockRequestServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -18,12 +15,11 @@ import static com.krukovska.paymentsystem.util.ModelHelper.setPaginationAttribut
 
 @Controller
 @RequestMapping("/request")
-//TODO rename to more meaningful name
-public class RequestController {
+public class UnblockRequestController {
 
-    private final RequestService requestService;
+    private final UnblockRequestServiceImpl requestService;
 
-    public RequestController(RequestService requestService) {
+    public UnblockRequestController(UnblockRequestServiceImpl requestService) {
         this.requestService = requestService;
     }
 
@@ -31,15 +27,15 @@ public class RequestController {
     public String allClientRequests(Model model, @RequestParam("page") Optional<Integer> page,
                                     @RequestParam("size") Optional<Integer> size) {
 
-        Page<Request> reqPage = requestService.findAllClientRequests(CLIENT_ID, page, size);
+        Page<UnblockRequest> reqPage = requestService.findAllClientRequests(CLIENT_ID, page, size);
         model.addAttribute("requestPage", reqPage);
         setPaginationAttributes(model, page, reqPage);
         return "requests";
     }
 
-    @PostMapping("/add")
-    public String createRequest(Model model, @RequestParam Long accountId) {
-        Response<Request> createResponse = requestService.createNewRequest(accountId, CLIENT_ID);
+    @PostMapping("/add/{accountId}")
+    public String createRequest(Model model, @PathVariable Long accountId) {
+        Response<UnblockRequest> createResponse = requestService.createNewRequest(accountId, CLIENT_ID);
         if (!createResponse.isOkay()) {
             model.addAttribute("errors", createResponse.getErrors());
             return "redirect:/account/all";
@@ -48,14 +44,14 @@ public class RequestController {
         return "redirect:/request/all";
     }
 
-    @PostMapping("/accept")
-    public String acceptRequest(@RequestParam String requestId) {
+    @PostMapping("/accept/{requestId}")
+    public String acceptRequest(@PathVariable Long requestId) {
         requestService.updateRequest(requestId, true);
         return "redirect:/request/all";
     }
 
-    @PostMapping("/decline")
-    public String declineRequest(@RequestParam String requestId) {
+    @PostMapping("/decline/{requestId}")
+    public String declineRequest(@PathVariable Long requestId) {
         requestService.updateRequest(requestId, false);
         return "redirect:/request/all";
     }

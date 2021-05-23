@@ -1,9 +1,10 @@
-package com.krukovska.paymentsystem.service;
+package com.krukovska.paymentsystem.service.impl;
 
 import com.krukovska.paymentsystem.persistence.model.Account;
 import com.krukovska.paymentsystem.persistence.model.AccountStatus;
 import com.krukovska.paymentsystem.persistence.model.Response;
 import com.krukovska.paymentsystem.persistence.repository.AccountRepository;
+import com.krukovska.paymentsystem.service.AccountService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -66,13 +67,12 @@ public class AccountServiceImpl implements AccountService {
             return new Response<>(singletonList("Account with id " + accountId + " does not exist"));
         }
 
-        if (account.getStatus() != AccountStatus.BLOCKED) {
+        if (account.getStatus() == AccountStatus.BLOCKED) {
             return new Response<>(singletonList("Account  " + account.getIban() + " is already blocked"));
         } else {
             account.setStatus(AccountStatus.BLOCKED);
             return new Response<>(accountRepository.save(account), new LinkedList<>());
         }
-
 
     }
 

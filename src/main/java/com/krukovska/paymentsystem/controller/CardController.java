@@ -1,6 +1,6 @@
 package com.krukovska.paymentsystem.controller;
 
-import com.krukovska.paymentsystem.service.CreditCardService;
+import com.krukovska.paymentsystem.service.impl.CreditCardServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,22 +13,34 @@ import static com.krukovska.paymentsystem.util.Constants.CLIENT_ID;
 @RequestMapping("/card")
 public class CardController {
 
-    private final CreditCardService creditCardService;
+    private final CreditCardServiceImpl creditCardService;
 
-    public CardController(CreditCardService creditCardService) {
+    public CardController(CreditCardServiceImpl creditCardService) {
         this.creditCardService = creditCardService;
     }
 
     @GetMapping("/all")
-    public String getAllClientCreditCards( Model model) {
+    public String getAllClientCreditCards(Model model) {
         model.addAttribute("cards", creditCardService.findAllClientCreditCards(CLIENT_ID));
         return "cards";
     }
 
     @GetMapping("/{cardNumber}")
     public String getCardByCardNumber(@PathVariable String cardNumber, Model model) {
-        //TODO validate input params
-        model.addAttribute("card", creditCardService.findCardByCardNumber(cardNumber));
+
+        //TODO add localization
+        if (cardNumber == null || cardNumber.equals("")) {
+            model.addAttribute("message", "Card number can't be empty");
+            return "error";
+        }
+
+        var creditCard = creditCardService.findCardByCardNumber(cardNumber);
+        if (creditCard == null) {
+            model.addAttribute("message", "Card doesn't exist");
+            return "error";
+        }
+
+        model.addAttribute("card", creditCard);
         return "card";
     }
 }

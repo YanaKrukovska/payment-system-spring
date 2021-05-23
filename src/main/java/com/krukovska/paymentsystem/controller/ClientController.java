@@ -1,14 +1,11 @@
 package com.krukovska.paymentsystem.controller;
 
 import com.krukovska.paymentsystem.persistence.model.Client;
-import com.krukovska.paymentsystem.service.ClientService;
+import com.krukovska.paymentsystem.service.impl.ClientServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -18,9 +15,9 @@ import static com.krukovska.paymentsystem.util.ModelHelper.setPaginationAttribut
 @RequestMapping("/client")
 public class ClientController {
 
-    private final ClientService clientService;
+    private final ClientServiceImpl clientService;
 
-    public ClientController(ClientService clientService) {
+    public ClientController(ClientServiceImpl clientService) {
         this.clientService = clientService;
     }
 
@@ -33,14 +30,14 @@ public class ClientController {
         return "clients";
     }
 
-    @PostMapping("/block")
-    public String blockClient(@RequestParam String clientId) {
+    @PostMapping("/{clientId}/block")
+    public String blockClient(@PathVariable Long clientId) {
         clientService.updateClientStatus(clientId, false);
         return "redirect:/client/all";
     }
 
-    @PostMapping("/unblock")
-    public String unblockClient(@RequestParam String clientId) {
+    @PostMapping("/{clientId}/unblock")
+    public String unblockClient(@PathVariable Long clientId) {
         clientService.updateClientStatus(clientId, true);
         return "redirect:/client/all";
     }

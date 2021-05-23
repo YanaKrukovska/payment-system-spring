@@ -26,14 +26,14 @@
         <td class="align-middle"><span class="align-middle" th:text="${client.user.email}"></span></td>
         <td class="align-middle"><span class="align-middle" th:text="${client.status}"></span></td>
         <td>
-            <form th:if="${client.status.name == 'ACTIVE'}" th:action="@{/client/block}" method="post">
-                <input type="hidden" name="clientId" th:value="${client.id}">
+            <form th:if="${client.status.name == 'ACTIVE'}"
+                  th:action="@{/client/{clientId}/block(clientId=${client.id})}" method="post">
                 <button type="submit" class="btn btn-danger" th:text="#{block}"></button>
             </form>
         </td>
         <td>
-            <form th:if="${client.status.name == 'BLOCKED'}" th:action="@{/client/unblock}" method="post">
-                <input type="hidden" name="clientId" th:value="${client.id}">
+            <form th:if="${client.status.name == 'BLOCKED'}"
+                  th:action="@{/client/{clientId}/unblock(clientId=${client.id})}" method="post">
                 <button type="submit" class="btn btn-dark" th:text="#{unblock}"></button>
             </form>
         </td>
@@ -41,5 +41,6 @@
     </tbody>
 </table>
 <div th:replace="fragments/pagination.html :: pagination(pageNumbers=${pageNumbers}, pageSize=${clientPage.size},
- sortField=${sortField}, sortDir=${sortDir})"></div></body>
+ sortField=${sortField}, sortDir=${sortDir})"></div>
+</body>
 </html>

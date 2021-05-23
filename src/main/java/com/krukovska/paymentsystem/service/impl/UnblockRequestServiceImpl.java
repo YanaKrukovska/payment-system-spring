@@ -1,9 +1,11 @@
-package com.krukovska.paymentsystem.service;
+package com.krukovska.paymentsystem.service.impl;
 
 import com.krukovska.paymentsystem.persistence.model.AccountStatus;
-import com.krukovska.paymentsystem.persistence.model.Request;
+import com.krukovska.paymentsystem.persistence.model.UnblockRequest;
 import com.krukovska.paymentsystem.persistence.model.Response;
 import com.krukovska.paymentsystem.persistence.repository.RequestRepository;
+import com.krukovska.paymentsystem.service.AccountService;
+import com.krukovska.paymentsystem.service.UnblockRequestService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -17,24 +19,25 @@ import static com.krukovska.paymentsystem.util.Constants.DEFAULT_CURRENT_PAGE;
 import static com.krukovska.paymentsystem.util.Constants.DEFAULT_PAGE_SIZE;
 
 @Service
-//TODO add interface
-public class RequestService {
+public class UnblockRequestServiceImpl implements UnblockRequestService {
 
     private final RequestRepository requestRepository;
     private final AccountService accountService;
-    private final ClientService clientService;
+    private final ClientServiceImpl clientService;
 
-    public RequestService(RequestRepository requestRepository, AccountServiceImpl accountService, ClientService clientService) {
+    public UnblockRequestServiceImpl(RequestRepository requestRepository, AccountServiceImpl accountService, ClientServiceImpl clientService) {
         this.requestRepository = requestRepository;
         this.accountService = accountService;
         this.clientService = clientService;
     }
 
-    public Request findRequestById(String requestId) {
-        return requestRepository.findById(Long.valueOf(requestId)).orElse(null);
+    @Override
+    public UnblockRequest findRequestById(Long requestId) {
+        return requestRepository.findById(requestId).orElse(null);
     }
 
-    public Response<Request> createNewRequest(Long accountId, Long clientId) {
+    @Override
+    public Response<UnblockRequest> createNewRequest(Long accountId, Long clientId) {
         var account = accountService.findAccountById(accountId);
 
         if (account == null) {
@@ -46,7 +49,7 @@ public class RequestService {
             return new Response<>(null, Collections.singletonList("Client doesn't exist"));
         }
 
-        var request = new Request();
+        var request = new UnblockRequest();
         request.setClient(client);
         request.setAccount(account);
         request.setCreationDate(new Date());
@@ -54,12 +57,14 @@ public class RequestService {
         return new Response<>(requestRepository.save(request), new LinkedList<>());
     }
 
-    public Page<Request> findAllClientRequests(Long clientId, Optional<Integer> page, Optional<Integer> size) {
+    @Override
+    public Page<UnblockRequest> findAllClientRequests(Long clientId, Optional<Integer> page, Optional<Integer> size) {
         return requestRepository.findAllByClientId(clientId,
                 PageRequest.of(page.orElse(DEFAULT_CURRENT_PAGE) - 1, size.orElse(DEFAULT_PAGE_SIZE)));
     }
 
-    public Response<Request> updateRequest(String requestId, boolean isAccepted) {
+    @Override
+    public Response<UnblockRequest> updateRequest(Long requestId, boolean isAccepted) {
         var request = findRequestById(requestId);
         if (request == null) {
             return new Response<>(null, Collections.singletonList("Request doesn't exist"));
