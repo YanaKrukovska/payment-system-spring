@@ -27,6 +27,7 @@ public class CardController {
 
     @GetMapping("/{cardNumber}")
     public String getCardByCardNumber(@PathVariable String cardNumber, Model model) {
+        //TODO validate input params
         model.addAttribute("card", creditCardService.findCardByCardNumber(cardNumber));
         return "card";
     }

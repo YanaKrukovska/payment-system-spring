@@ -26,6 +26,9 @@ public class ModelHelper {
         setPaginationAttributes(model, pageNumber, page);
     }
 
+
+
+
     public static void setPaginationAttributes(Model model, Optional<Integer> pageNumber, Page<?> page) {
         model.addAttribute("page", pageNumber.orElse(DEFAULT_CURRENT_PAGE));
 

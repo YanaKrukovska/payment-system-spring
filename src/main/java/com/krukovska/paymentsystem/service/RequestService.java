@@ -17,13 +17,14 @@ import static com.krukovska.paymentsystem.util.Constants.DEFAULT_CURRENT_PAGE;
 import static com.krukovska.paymentsystem.util.Constants.DEFAULT_PAGE_SIZE;
 
 @Service
+//TODO add interface
 public class RequestService {
 
     private final RequestRepository requestRepository;
     private final AccountService accountService;
     private final ClientService clientService;
 
-    public RequestService(RequestRepository requestRepository, AccountService accountService, ClientService clientService) {
+    public RequestService(RequestRepository requestRepository, AccountServiceImpl accountService, ClientService clientService) {
         this.requestRepository = requestRepository;
         this.accountService = accountService;
         this.clientService = clientService;
@@ -33,7 +34,7 @@ public class RequestService {
         return requestRepository.findById(Long.valueOf(requestId)).orElse(null);
     }
 
-    public Response<Request> createNewRequest(String accountId, Long clientId) {
+    public Response<Request> createNewRequest(Long accountId, Long clientId) {
         var account = accountService.findAccountById(accountId);
 
         if (account == null) {

@@ -2,63 +2,101 @@ package com.krukovska.paymentsystem.controller;
 
 import com.krukovska.paymentsystem.persistence.model.Account;
 import com.krukovska.paymentsystem.persistence.model.Response;
-import com.krukovska.paymentsystem.service.AccountService;
+import com.krukovska.paymentsystem.service.AccountServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static com.krukovska.paymentsystem.util.Constants.CLIENT_ID;
 import static com.krukovska.paymentsystem.util.ModelHelper.setSortingPaginationAttributes;
+import static com.krukovska.paymentsystem.util.PageRequestHelper.createPageRequest;
 
 @Controller
 @RequestMapping("/account")
 public class AccountController {
 
-    private final AccountService accountService;
+    private final AccountServiceImpl accountService;
 
-    public AccountController(AccountService accountService) {
+    public AccountController(AccountServiceImpl accountService) {
         this.accountService = accountService;
     }
 
     @GetMapping(value = "/all")
-    public String allAccounts(Model model, @RequestParam("page") Optional<Integer> page,
-                              @RequestParam("size") Optional<Integer> size,
+    public String allAccounts(Model model, @RequestParam("page") Optional<Integer> pageNumber,
+                              @RequestParam("size") Optional<Integer> pageSize,
                               @RequestParam("sortField") Optional<String> sortField,
                               @RequestParam("sortDir") Optional<String> sortDir) {
 
-        Page<Account> accPage = accountService.findAllClientAccounts(CLIENT_ID, page, size, sortField, sortDir);
+        Page<Account> accPage = accountService.findAllClientAccounts(CLIENT_ID, createPageRequest(pageNumber, pageSize, sortField, sortDir));
         model.addAttribute("accountPage", accPage);
-        setSortingPaginationAttributes(model, page, sortField, sortDir, accPage);
+        setSortingPaginationAttributes(model, pageNumber, sortField, sortDir, accPage);
         return "accounts";
     }
 
-    @GetMapping("/topup")
-    public String getTopUpPage(Model model, @RequestParam String accountId) {
+    @GetMapping("/topup/{accountId}")
+    //TODO can accountId be  a path param?
+    public String getTopUpPage(Model model, @PathVariable Long accountId) {
+        //TODO validate input params
         model.addAttribute("accountId", accountId);
         return "account-topup";
     }
 
     @PostMapping("/topup")
-    public String topUpAccount(Model model, @RequestParam String accountId, @ModelAttribute("amount") double amount) {
-        Response<Account> updateResponse = accountService.topUpAccount(accountId, amount);
+    //TODO can accountId be  a path param?
+    public String topUpAccount(Model model, @RequestParam Long accountId, @ModelAttribute("amount") double amount) {
+        //TODO can we avoid double?
 
-        if (!updateResponse.isOkay()) {
-            model.addAttribute("errors", updateResponse.getErrors());
-            return "account-topup";
+        List<String> errors  = new ArrayList<>();
+        if (accountId == null ) {
+            //TODO add localization
+            errors.add("Account ID must be not empty");
         }
-        return "redirect:/account/all";
+
+        if (amount <= 0) {
+            //TODO add localization
+            errors.add("Amount must be greater than 0 ");
+        }
+
+        if (errors.isEmpty()) {
+            Response<Account> updateResponse = accountService.topUpAccount(accountId, amount);
+            if (updateResponse.hasErrors()) {
+                errors.addAll(updateResponse.getErrors());
+            }
+        }
+
+        if (errors.isEmpty()) {
+            return "account-topup";
+        } else {
+            model.addAttribute("errors", errors);
+            return "redirect:/account/all";
+        }
+
     }
 
     @PostMapping("/block")
-    public String blockAccount(Model model, @RequestParam String accountId) {
-        Response<Account> updateResponse = accountService.blockAccount(accountId);
-        if (!updateResponse.isOkay()) {
-            model.addAttribute("errors", updateResponse.getErrors());
+    //TODO can accountId be a path param?
+    public String blockAccount(Model model, @RequestParam Long accountId) {
+        List<String> errors  = new ArrayList<>();
+        if (accountId == null ) {
+            //TODO add localization
+            errors.add("Account ID must be not empty");
         }
+        if (errors.isEmpty()) {
+            Response<Account> updateResponse = accountService.blockAccount(accountId);
+            if (updateResponse.hasErrors()) {
+                errors.addAll(updateResponse.getErrors());
+            }
+        }
+        model.addAttribute("errors", errors);
 
         return "redirect:/account/all";
     }
+
+
+
 }

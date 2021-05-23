@@ -2,7 +2,7 @@ package com.krukovska.paymentsystem.controller;
 
 import com.krukovska.paymentsystem.persistence.model.Payment;
 import com.krukovska.paymentsystem.persistence.model.PaymentStatus;
-import com.krukovska.paymentsystem.service.AccountService;
+import com.krukovska.paymentsystem.service.AccountServiceImpl;
 import com.krukovska.paymentsystem.service.PaymentService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -21,9 +21,9 @@ import static com.krukovska.paymentsystem.util.ModelHelper.setSortingPaginationA
 public class PaymentController {
 
     private final PaymentService paymentService;
-    private final AccountService accountService;
+    private final AccountServiceImpl accountService;
 
-    public PaymentController(PaymentService paymentService, AccountService accountService) {
+    public PaymentController(PaymentService paymentService, AccountServiceImpl accountService) {
         this.paymentService = paymentService;
         this.accountService = accountService;
     }
@@ -40,7 +40,7 @@ public class PaymentController {
     }
 
     @GetMapping("/add")
-    public String getPaymentCreationPage(Model model, @RequestParam String accountId) {
+    public String getPaymentCreationPage(Model model, @RequestParam Long accountId) {
         model.addAttribute("account", accountService.findAccountById(accountId));
         model.addAttribute("statuses", PaymentStatus.values());
         return "payment-add";

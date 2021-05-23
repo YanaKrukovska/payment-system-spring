@@ -13,6 +13,7 @@ import static com.krukovska.paymentsystem.util.Constants.DEFAULT_PAGE_SIZE;
 import static com.krukovska.paymentsystem.util.SortHelper.buildSort;
 
 @Service
+//TODO add interface
 public class PaymentService {
 
     private final PaymentRepository paymentRepository;

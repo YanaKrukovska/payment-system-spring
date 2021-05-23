@@ -50,8 +50,9 @@
                                     th:href="@{/card/{cardNumber}(cardNumber=${account.creditCard.cardNumber})}"></a>
         </td>
         <td>
-            <form th:if="${account.status.name == 'ACTIVE'}" th:action="@{/account/topup}" method="get">
-                <input type="hidden" name="accountId" th:value="${account.id}">
+            <form th:if="${account.status.name == 'ACTIVE'}"
+                  th:action="@{/account/topup/{accountId}(accountId=${account.id})}"
+                  method="get">
                 <button type="submit" class="btn btn-success" th:text="#{topUp}"></button>
             </form>
         </td>
@@ -64,13 +65,13 @@
         <td>
             <form th:if="${account.status.name == 'ACTIVE'}" th:action="@{/account/block}" method="post">
                 <input type="hidden" name="accountId" th:value="${account.id}">
-                <button type="submit" class="btn btn-danger" th:text="#{blockAccount}"></button>
+                <button type="submit" class="btn btn-danger" th:text="#{block}"></button>
             </form>
         </td>
         <td>
             <form th:if="${account.status.name == 'BLOCKED'}" th:action="@{/request/add}" method="post">
                 <input type="hidden" name="accountId" th:value="${account.id}">
-                <button type="submit" class="btn btn-warning" th:text="#{unblockAccount}"></button>
+                <button type="submit" class="btn btn-warning" th:text="#{unblock}"></button>
             </form>
         </td>
     </tr>

@@ -18,6 +18,7 @@ import static com.krukovska.paymentsystem.util.ModelHelper.setPaginationAttribut
 
 @Controller
 @RequestMapping("/request")
+//TODO rename to more meaningful name
 public class RequestController {
 
     private final RequestService requestService;
@@ -37,7 +38,7 @@ public class RequestController {
     }
 
     @PostMapping("/add")
-    public String createRequest(Model model, @RequestParam String accountId) {
+    public String createRequest(Model model, @RequestParam Long accountId) {
         Response<Request> createResponse = requestService.createNewRequest(accountId, CLIENT_ID);
         if (!createResponse.isOkay()) {
             model.addAttribute("errors", createResponse.getErrors());

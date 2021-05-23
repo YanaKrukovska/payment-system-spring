@@ -11,6 +11,8 @@ public class SortHelper {
 
     private SortHelper(){}
 
+
+
     public static Sort buildSort(Optional<String> sortField, Optional<String> sortDirection) {
         return sortDirection.orElse(DEFAULT_SORTING_ORDER).equalsIgnoreCase(Sort.Direction.ASC.name()) ?
                 Sort.by(sortField.orElse(DEFAULT_SORTING_FIELD)).ascending() :
