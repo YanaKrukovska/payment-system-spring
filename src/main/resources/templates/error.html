@@ -12,9 +12,9 @@
 <div>
     <img src="https://pbs.twimg.com/media/EMX9ColXYAAW438.jpg" width="400" height="350" alt="cursed-emoji">
     <form class="info" th:action="@{/account/all}" method="get">
-        <h1 class="h3 mb-3 font-weight-normal" id="error-banner">Something went wrong!</h1>
+        <h1 class="h3 mb-3 font-weight-normal" id="error-banner" th:text="#{error.wentWrong}"></h1>
         <span class="text-info" th:text="${message}"></span>
-        <button type="submit" class="btn btn-primary">Return to the main page</button>
+        <button type="submit" class="btn btn-primary" th:text="#{error.toMain}"></button>
     </form>
 </div>
 </body>

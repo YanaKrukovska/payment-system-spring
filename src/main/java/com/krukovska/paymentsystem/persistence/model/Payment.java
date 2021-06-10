@@ -1,18 +1,17 @@
 package com.krukovska.paymentsystem.persistence.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Entity(name = "payments")
 @Table(indexes = {@Index(columnList = "payment_date", name = "PAYMENT_DATE_INDEX"),
         @Index(columnList = "account_id", name = "PAYMENT_ACCOUNT_INDEX")})
@@ -40,6 +39,5 @@ public class Payment {
     private String details;
 
     @Column(nullable = false, name = "payment_date")
-    @Temporal(TemporalType.DATE)
-    private Date paymentDate;
+    private LocalDate paymentDate;
 }

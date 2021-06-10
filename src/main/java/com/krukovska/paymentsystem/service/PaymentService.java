@@ -9,4 +9,6 @@ public interface PaymentService {
 
     Page<Payment> findAllClientPayments(Long clientId, Optional<Integer> page, Optional<Integer> size,
                                         Optional<String> sortField, Optional<String> sortDirection);
+
+    Payment create(Payment payment);
 }

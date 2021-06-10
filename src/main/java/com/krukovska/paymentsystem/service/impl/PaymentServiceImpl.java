@@ -30,4 +30,10 @@ public class PaymentServiceImpl implements PaymentService {
                         buildSort(sortField, sortDirection)));
     }
 
+    @Override
+    public Payment create(Payment payment) {
+        //TODO: add validation
+        return paymentRepository.save(payment);
+    }
+
 }

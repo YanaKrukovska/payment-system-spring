@@ -50,9 +50,4 @@ public class UnblockRequestController {
         return "redirect:/request/all";
     }
 
-    @PostMapping("/decline/{requestId}")
-    public String declineRequest(@PathVariable Long requestId) {
-        requestService.updateRequest(requestId, false);
-        return "redirect:/request/all";
-    }
 }

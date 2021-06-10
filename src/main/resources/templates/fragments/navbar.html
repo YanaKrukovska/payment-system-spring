@@ -4,34 +4,31 @@
 <nav th:fragment="navigation" class="navbar navbar-expand-sm navbar-dark bg-dark">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="/" th:text="#{navbarHeader}"></a>
+            <a class="navbar-brand" href="/" th:text="#{navbar.navbarHeader}"></a>
         </div>
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/account/all" th:text="#{accounts}"></a>
+                <a class="nav-link" href="/account/all" th:text="#{navbar.accounts}"></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/card/all" th:text="#{creditCards}"></a>
+                <a class="nav-link" href="/card/all" th:text="#{navbar.creditCards}"></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/payment/all" th:text="#{payments}"></a>
+                <a class="nav-link" href="/payment/all" th:text="#{navbar.payments}"></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/request/all" th:text="#{requests}"></a>
+                <a class="nav-link" href="/request/all" th:text="#{navbar.requests}"></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/client/all" th:text="#{clients}"></a>
+                <a class="nav-link" href="/client/all" th:text="#{navbar.clients}"></a>
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a class="nav-link" href="/login" th:text="#{login}"></a>
+                <a class="nav-link" href="/login" th:text="#{navbar.login}"></a>
             </li>
             <li>
-                <a class="nav-link" href="/signup" th:text="#{signup}"></a>
-            </li>
-            <li>
-                <a class="nav-link" href="/logout" th:text="#{logout}">L</a>
+                <a class="nav-link" href="/logout" th:text="#{navbar.logout}">L</a>
             </li>
             <li>
                 <a id="en-link" class="nav-link" th:href="@{''(lang=en)}">ENG</a>

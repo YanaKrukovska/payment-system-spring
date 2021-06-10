@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title th:text="#{navbar.payments}"></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
@@ -14,20 +14,21 @@
     <tr>
         <th scope="col">
             <a th:href="@{''(size=${payPage.size}, page=${page}, sortField='id', sortDir=${reverseSortDir})}"
-               th:text="#{number}">
+               th:text="#{general.number}">
             </a>
         </th>
-        <th scope="col" th:text="#{amount}"></th>
+        <th scope="col" th:text="#{general.amount}"></th>
         <th scope="col">
             <a th:href="@{''(size=${payPage.size},  page=${page}, sortField='paymentDate', sortDir=${reverseSortDir})}"
-               th:text="#{paymentDate}">
+               th:text="#{payment.paymentDate}">
             </a>
         </th>
-        <th scope="col" th:text="#{receiverIban}"></th>
-        <th scope="col" th:text="#{status}"></th>
-        <th scope="col" th:text="#{details}"></th>
-        <th scope="col" th:text="#{accountName}"></th>
-        <th scope="col" th:text="#{creditCard}"></th>
+        <th scope="col" th:text="#{payment.receiverIban}"></th>
+        <th scope="col" th:text="#{general.status}"></th>
+        <th scope="col" th:text="#{payment.details}"></th>
+        <th scope="col" th:text="#{account.name}"></th>
+        <th scope="col" th:text="#{card.creditCard}"></th>
+        <th scope="col"></th>
     </tr>
     </thead>
     <tbody>
@@ -40,6 +41,13 @@
         <td class="align-middle"><span class="align-middle" th:text="${payment.details}"></span></td>
         <td class="align-middle"><span class="align-middle" th:text="${payment.account.name}"></span></td>
         <td class="align-middle"><span class="align-middle" th:text="${payment.account.creditCard.cardNumber}"></span>
+        </td>
+        <td>
+            <form th:if="${payment.status.name == 'Created'}"
+                  th:action="@{/payment/send/{paymentId}(paymentId=${payment.id})}" method="post">
+                <button type="submit" class="btn btn-success" th:text="#{payment.send}">
+                </button>
+            </form>
         </td>
     </tr>
     </tbody>

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title th:text="#{navbar.accounts}"></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
@@ -17,22 +17,22 @@
     <tr>
         <th scope="col">
             <a th:href="@{''(size=${accountPage.size},  page=${page}, sortField='id', sortDir=${reverseSortDir})}"
-               th:text="#{number}">
+               th:text="#{general.number}">
             </a>
         </th>
         <th scope="col">
             <a th:href="@{''(size=${accountPage.size},  page=${page}, sortField='name', sortDir=${reverseSortDir})}"
-               th:text="#{name}">
+               th:text="#{general.name}">
             </a>
         </th>
         <th scope="col">
             <a th:href="@{''(size=${accountPage.size},  page=${page}, sortField='balance', sortDir=${reverseSortDir})}"
-               th:text="#{balance}">
+               th:text="#{account.balance}">
             </a>
         </th>
         <th scope="col">IBAN</th>
-        <th scope="col" th:text="#{status}"></th>
-        <th scope="col" th:text="#{creditCard}"></th>
+        <th scope="col" th:text="#{general.status}"></th>
+        <th scope="col" th:text="#{card.creditCard}"></th>
         <th scope="col"></th>
         <th scope="col"></th>
         <th scope="col"></th>
@@ -52,25 +52,25 @@
         <td>
             <form th:if="${account.status.name == 'ACTIVE'}"
                   th:action="@{/account/topup/{accountId}(accountId=${account.id})}" method="get">
-                <button type="submit" class="btn btn-success" th:text="#{topUp}"></button>
+                <button type="submit" class="btn btn-success" th:text="#{account.topUp}"></button>
             </form>
         </td>
         <td>
             <form th:if="${account.status.name == 'ACTIVE'}" th:action="@{/payment/add}" method="get">
                 <input type="hidden" name="accountId" th:value="${account.id}">
-                <button type="submit" class="btn btn-primary" th:text="#{createPayment}"></button>
+                <button type="submit" class="btn btn-primary" th:text="#{payment.create}"></button>
             </form>
         </td>
         <td>
             <form th:if="${account.status.name == 'ACTIVE'}"
                   th:action="@{/account/block/{accountId}(accountId=${account.id})}" method="post">
-                <button type="submit" class="btn btn-danger" th:text="#{block}"></button>
+                <button type="submit" class="btn btn-danger" th:text="#{general.block}"></button>
             </form>
         </td>
         <td>
             <form th:if="${account.status.name == 'BLOCKED'}"
                   th:action="@{/request/add/{accountId}(accountId=${account.id})}" method="post">
-                <button type="submit" class="btn btn-warning" th:text="#{unblock}"></button>
+                <button type="submit" class="btn btn-warning" th:text="#{general.unblock}"></button>
             </form>
         </td>
     </tr>

@@ -7,10 +7,10 @@ import com.krukovska.paymentsystem.service.impl.PaymentServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.Collections;
 import java.util.Optional;
 
 import static com.krukovska.paymentsystem.util.Constants.CLIENT_ID;
@@ -41,8 +41,31 @@ public class PaymentController {
 
     @GetMapping("/add")
     public String getPaymentCreationPage(Model model, @RequestParam Long accountId) {
-        model.addAttribute("account", accountService.findAccountById(accountId));
-        model.addAttribute("statuses", PaymentStatus.values());
+
+        var account = accountService.findAccountById(accountId);
+        if (account == null) {
+            model.addAttribute("errors", Collections.singletonList("Accoutn doesn't exist"));
+            return "payments";
+        }
+
+        var payment = new Payment();
+        payment.setAccount(account);
+        model.addAttribute("payment", payment);
+        model.addAttribute("accountId", accountId);
+        model.addAttribute("balance", account.getBalance());
+
         return "payment-add";
+    }
+
+
+    @PostMapping("/add")
+    public String createNewPayment(@ModelAttribute Payment payment) {
+
+        payment.setStatus(PaymentStatus.CREATED);
+        payment.setPaymentDate(LocalDate.now());
+
+        paymentService.create(payment);
+
+        return "redirect:/payment/all";
     }
 }

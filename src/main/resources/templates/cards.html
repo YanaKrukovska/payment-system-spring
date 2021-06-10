@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title th:text="#{navbar.creditCards}"></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
@@ -13,8 +13,8 @@
     <thead class="thead-light">
     <tr>
         <th scope="col">Id</th>
-        <th scope="col" th:text="#{creditCard}"></th>
-        <th scope="col" th:text="#{isExpired}"></th>
+        <th scope="col" th:text="#{card.creditCard}"></th>
+        <th scope="col" th:text="#{card.isExpired}"></th>
     </tr>
     </thead>
     <tbody>

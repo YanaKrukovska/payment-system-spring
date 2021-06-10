@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add entry</title>
+    <title th:text="#{account.topUp}"></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="../static/css/form.css" th:href="@{/css/form.css}" rel="stylesheet"/>
@@ -13,14 +13,14 @@
 
     <form th:action="@{/account/topup/{accountId}(accountId=${accountId})}" method="post">
 
-        <h2 class="text-center" th:text="#{accountTopUp}"></h2>
+        <h2 class="text-center" th:text="#{account.topUpAccount}"></h2>
 
         <div class="form-group">
-            <label for="amount" th:text="#{amount}"> </label>
+            <label for="amount" th:text="#{general.amount}"> </label>
             <input id="amount" type="number" step="0.01" min="0" class="form-control" name="amount" required>
         </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-success btn-block">Top Up</button>
+            <button type="submit" class="btn btn-success btn-block"  th:text="#{account.topUp}"></button>
         </div>
     </form>
     <div class="errors-div" th:if="${errors != null}" th:each="error : ${errors}">

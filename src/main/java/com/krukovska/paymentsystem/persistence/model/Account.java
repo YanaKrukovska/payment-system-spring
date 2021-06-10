@@ -3,6 +3,7 @@ package com.krukovska.paymentsystem.persistence.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -10,6 +11,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 @Entity
 @Table(name = "accounts", indexes = {@Index(columnList = "name", name = "ACCOUNT_NAME_INDEX"),
         @Index(columnList = "balance", name = "PAYMENT_BALANCE_INDEX")})

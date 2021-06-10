@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title th:text="#{navbar.requests}"></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
@@ -12,12 +12,11 @@
 <table class="table">
     <thead class="thead-light">
     <tr>
-        <th scope="col" th:text="#{number}"></th>
-        <th scope="col" th:text="#{clientId}"></th>
-        <th scope="col" th:text="#{accountName}"></th>
-        <th scope="col" th:text="#{creationDate}"></th>
-        <th scope="col" th:text="#{actionDate}"></th>
-        <th scope="col"></th>
+        <th scope="col" th:text="#{general.number}"></th>
+        <th scope="col" th:text="#{request.clientId}"></th>
+        <th scope="col" th:text="#{account.name}"></th>
+        <th scope="col" th:text="#{request.creationDate}"></th>
+        <th scope="col" th:text="#{request.actionDate}"></th>
         <th scope="col"></th>
     </tr>
     </thead>
@@ -32,13 +31,7 @@
         <td>
             <form th:if="${request.actionDate == null}"
                   th:action="@{/request/accept/{requestId}(requestId=${request.id})}" method="post">
-                <button type="submit" class="btn btn-success" th:text="#{accept}"></button>
-            </form>
-        </td>
-        <td>
-            <form th:if="${request.actionDate == null}"
-                  th:action="@{/request/decline/{requestId}(requestId=${request.id})}" method="post">
-                <button type="submit" class="btn btn-danger" th:text="#{decline}"></button>
+                <button type="submit" class="btn btn-success" th:text="#{request.accept}"></button>
             </form>
         </td>
     </tr>

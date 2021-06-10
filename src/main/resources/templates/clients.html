@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title th:text="#{navbar.clients}"></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
@@ -11,10 +11,10 @@
 <table class="table">
     <thead class="thead-light">
     <tr>
-        <th scope="col" th:text="#{number}"></th>
-        <th scope="col" th:text="#{name}"></th>
+        <th scope="col" th:text="#{general.number}"></th>
+        <th scope="col" th:text="#{general.name}"></th>
         <th scope="col">Email</th>
-        <th scope="col" th:text="#{status}"></th>
+        <th scope="col" th:text="#{general.status}"></th>
         <th scope="col"></th>
         <th scope="col"></th>
     </tr>
@@ -28,13 +28,13 @@
         <td>
             <form th:if="${client.status.name == 'ACTIVE'}"
                   th:action="@{/client/{clientId}/block(clientId=${client.id})}" method="post">
-                <button type="submit" class="btn btn-danger" th:text="#{block}"></button>
+                <button type="submit" class="btn btn-danger" th:text="#{general.block}"></button>
             </form>
         </td>
         <td>
             <form th:if="${client.status.name == 'BLOCKED'}"
                   th:action="@{/client/{clientId}/unblock(clientId=${client.id})}" method="post">
-                <button type="submit" class="btn btn-dark" th:text="#{unblock}"></button>
+                <button type="submit" class="btn btn-dark" th:text="#{general.unblock}"></button>
             </form>
         </td>
     </tr>
