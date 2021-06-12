@@ -3,12 +3,14 @@ package com.krukovska.paymentsystem.persistence.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 @Entity(name = "credit_cards")
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "card_number", name = "CARD_NUMBER_UNIQUE_CONSTRAINT"))
 public class CreditCard {

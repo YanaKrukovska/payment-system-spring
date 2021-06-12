@@ -5,6 +5,8 @@ import com.krukovska.paymentsystem.persistence.model.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import java.math.BigDecimal;
+
 public interface AccountService {
     Page<Account> findAllClientAccounts(Long clientId, PageRequest page);
 
@@ -15,4 +17,6 @@ public interface AccountService {
     Response<Account> blockAccount(Long accountId);
 
     void updateAccount(Account account);
+
+    Response<Account> withdrawAmount(long accountId, BigDecimal amount);
 }

@@ -4,6 +4,8 @@ import com.krukovska.paymentsystem.persistence.model.Payment;
 import com.krukovska.paymentsystem.persistence.model.PaymentStatus;
 import com.krukovska.paymentsystem.service.impl.AccountServiceImpl;
 import com.krukovska.paymentsystem.service.impl.PaymentServiceImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +21,9 @@ import static com.krukovska.paymentsystem.util.ModelHelper.setSortingPaginationA
 @Controller
 @RequestMapping("/payment")
 public class PaymentController {
+
+    private final Logger log = LogManager.getLogger(this.getClass());
+
 
     private final PaymentServiceImpl paymentService;
     private final AccountServiceImpl accountService;
@@ -66,6 +71,12 @@ public class PaymentController {
 
         paymentService.create(payment);
 
+        return "redirect:/payment/all";
+    }
+
+    @PostMapping("/send/{paymentId}")
+    public String sendPayment(@PathVariable Long paymentId) {
+        paymentService.send(paymentId);
         return "redirect:/payment/all";
     }
 }

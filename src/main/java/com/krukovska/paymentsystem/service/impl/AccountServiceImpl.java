@@ -80,4 +80,14 @@ public class AccountServiceImpl implements AccountService {
     public void updateAccount(Account account) {
         accountRepository.save(account);
     }
+
+    @Override
+    public Response<Account> withdrawAmount(long accountId, BigDecimal amount) {
+        var account = findAccountById(accountId);
+        if (account == null) {
+            return new Response<>(singletonList("Account with id" + accountId + "doesn't exist"));
+        }
+        account.setBalance(account.getBalance().subtract(amount));
+        return new Response<>(accountRepository.save(account), new LinkedList<>());
+    }
 }

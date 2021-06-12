@@ -9,4 +9,6 @@ public interface PaymentRepository extends PagingAndSortingRepository<Payment, L
 
     Page<Payment> findAllByAccountClientId(Long clientId, Pageable pageable);
 
+    Payment findById(long id);
+
 }
