@@ -9,4 +9,6 @@ public interface AccountRepository extends PagingAndSortingRepository<Account, L
 
     Page<Account> findAllByClientId(Long clientId, Pageable pageable);
 
+    Account findAccountById(Long id);
+
 }

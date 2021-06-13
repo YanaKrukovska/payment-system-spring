@@ -37,7 +37,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account findAccountById(Long accountId) {
         requireNonNull(accountId, "Account id must be not null");
-        return accountRepository.findById(accountId).orElse(null);
+        return accountRepository.findAccountById(accountId);
     }
 
     @Override
@@ -85,8 +85,17 @@ public class AccountServiceImpl implements AccountService {
     public Response<Account> withdrawAmount(long accountId, BigDecimal amount) {
         var account = findAccountById(accountId);
         if (account == null) {
-            return new Response<>(singletonList("Account with id" + accountId + "doesn't exist"));
+            return new Response<>(singletonList("Account with id " + accountId + " does not exists"));
         }
+
+        if (amount.compareTo(BigDecimal.ZERO) <= 0) {
+            return new Response<>(singletonList("Sum must be > 0. current amount =  " + amount));
+        }
+
+        if (account.getBalance().compareTo(amount) < 0) {
+            return new Response<>(singletonList("Account balance: " + account.getBalance() + ". Required amount: " + amount));
+        }
+
         account.setBalance(account.getBalance().subtract(amount));
         return new Response<>(accountRepository.save(account), new LinkedList<>());
     }
