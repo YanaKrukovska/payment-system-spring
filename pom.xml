@@ -94,6 +94,13 @@
             <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
 
+        <!--Testing dependencies-->
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>

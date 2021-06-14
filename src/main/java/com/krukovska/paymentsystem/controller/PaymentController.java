@@ -17,6 +17,7 @@ import java.util.Optional;
 
 import static com.krukovska.paymentsystem.util.Constants.CLIENT_ID;
 import static com.krukovska.paymentsystem.util.ModelHelper.setSortingPaginationAttributes;
+import static com.krukovska.paymentsystem.util.PageRequestHelper.createPageRequest;
 
 @Controller
 @RequestMapping("/payment")
@@ -38,7 +39,7 @@ public class PaymentController {
                                        @RequestParam("size") Optional<Integer> size,
                                        @RequestParam("sortField") Optional<String> sortField,
                                        @RequestParam("sortDir") Optional<String> sortDir) {
-        Page<Payment> payPage = paymentService.findAllClientPayments(CLIENT_ID, page, size, sortField, sortDir);
+        Page<Payment> payPage = paymentService.findAllClientPayments(CLIENT_ID,createPageRequest(page, size, sortField, sortDir));
         model.addAttribute("payPage", payPage);
         setSortingPaginationAttributes(model, page, sortField, sortDir, payPage);
         return "payments";

@@ -5,6 +5,7 @@ import com.krukovska.paymentsystem.persistence.model.UnblockRequest;
 import com.krukovska.paymentsystem.persistence.model.Response;
 import com.krukovska.paymentsystem.persistence.repository.RequestRepository;
 import com.krukovska.paymentsystem.service.AccountService;
+import com.krukovska.paymentsystem.service.ClientService;
 import com.krukovska.paymentsystem.service.UnblockRequestService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,9 +24,9 @@ public class UnblockRequestServiceImpl implements UnblockRequestService {
 
     private final RequestRepository requestRepository;
     private final AccountService accountService;
-    private final ClientServiceImpl clientService;
+    private final ClientService clientService;
 
-    public UnblockRequestServiceImpl(RequestRepository requestRepository, AccountServiceImpl accountService, ClientServiceImpl clientService) {
+    public UnblockRequestServiceImpl(RequestRepository requestRepository, AccountService accountService, ClientService clientService) {
         this.requestRepository = requestRepository;
         this.accountService = accountService;
         this.clientService = clientService;
@@ -33,7 +34,7 @@ public class UnblockRequestServiceImpl implements UnblockRequestService {
 
     @Override
     public UnblockRequest findRequestById(Long requestId) {
-        return requestRepository.findById(requestId).orElse(null);
+        return requestRepository.findUnblockRequestById(requestId);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.krukovska.paymentsystem.controller;
 
 import com.krukovska.paymentsystem.persistence.model.Client;
+import com.krukovska.paymentsystem.service.ClientService;
 import com.krukovska.paymentsystem.service.impl.ClientServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -15,9 +16,9 @@ import static com.krukovska.paymentsystem.util.ModelHelper.setPaginationAttribut
 @RequestMapping("/client")
 public class ClientController {
 
-    private final ClientServiceImpl clientService;
+    private final ClientService clientService;
 
-    public ClientController(ClientServiceImpl clientService) {
+    public ClientController(ClientService clientService) {
         this.clientService = clientService;
     }
 

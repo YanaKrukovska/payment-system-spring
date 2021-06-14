@@ -7,5 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RequestRepository extends JpaRepository<UnblockRequest, Long> {
 
+    UnblockRequest findUnblockRequestById(Long id);
+
     Page<UnblockRequest> findAllByClientId(Long clientId, Pageable pageable);
 }
