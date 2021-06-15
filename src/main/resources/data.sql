@@ -1,7 +1,11 @@
-INSERT INTO users(email, name, password, is_admin)
-VALUES ('olegvynnyk@gmail.com', 'Oleg Vynnyk', '1111', true),
-       ('justinbieber@gmail.com', 'Justin Bieber', '1111', false),
-       ('britneyspears@gmail.com', 'Britney Spears', '1111', false);
+INSERT INTO roles (id, name)
+VALUES (1, 'ROLE_ADMIN'),
+       (2, 'ROLE_CLIENT');
+
+INSERT INTO users(email, name, password, role_id)
+VALUES ('olegvynnyk@gmail.com', 'Oleg Vynnyk', '$2a$10$nezDN5pqRv9P3U2y8cTac.1zic9AnMbKyIqO4/dvL7wIIm7tQrpUa', 1),
+       ('justinbieber@gmail.com', 'Justin Bieber', '$2a$10$nezDN5pqRv9P3U2y8cTac.1zic9AnMbKyIqO4/dvL7wIIm7tQrpUa', 2),
+       ('britneyspears@gmail.com', 'Britney Spears', '$2a$10$nezDN5pqRv9P3U2y8cTac.1zic9AnMbKyIqO4/dvL7wIIm7tQrpUa', 2);
 
 INSERT INTO clients(user_id, status)
 VALUES (2, 'ACTIVE'),

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="eng" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title th:text="#{navbar.login}"></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="../static/css/form.css" th:href="@{/css/form.css}" rel="stylesheet" type="text/css" media="all"/>
+    <link href="../static/css/common.css" th:href="@{/css/common.css}" rel="stylesheet" type="text/css" media="all"/>
+</head>
+<div th:replace="fragments/navbar.html :: navigation"></div>
+<body>
+<div class="custom-form">
+    <form th:action="@{/login-processing}" th:object="${user}" method="post">
+        <h2 class="text-center" th:text="#{navbar.login}"></h2>
+        <div class="form-group">
+            <label for="email" hidden></label>
+            <input id="email" type="email" class="form-control" placeholder="Email" th:field="*{email}" required="required">
+        </div>
+        <div class="form-group">
+            <label for="password" hidden></label>
+            <input id="password" type="password" class="form-control" placeholder="Password" th:field="*{password}"
+                   required="required">
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block" th:text="#{navbar.login}"></button>
+        </div>
+    </form>
+
+    <div class="errors-div" th:if="${error != null}">
+        <div class="alert alert-danger" role="alert" th:text="${error}">
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
