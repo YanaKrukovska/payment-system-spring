@@ -23,9 +23,6 @@ import static com.krukovska.paymentsystem.util.PageRequestHelper.createPageReque
 @RequestMapping("/payment")
 public class PaymentController {
 
-    private final Logger log = LogManager.getLogger(this.getClass());
-
-
     private final PaymentServiceImpl paymentService;
     private final AccountServiceImpl accountService;
 

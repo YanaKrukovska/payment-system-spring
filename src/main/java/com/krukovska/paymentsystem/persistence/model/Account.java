@@ -3,7 +3,6 @@ package com.krukovska.paymentsystem.persistence.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -11,7 +10,6 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @Entity
 @Table(name = "accounts", indexes = {@Index(columnList = "name", name = "ACCOUNT_NAME_INDEX"),
         @Index(columnList = "balance", name = "PAYMENT_BALANCE_INDEX")})
@@ -42,4 +40,10 @@ public class Account {
     @JoinColumn(foreignKey = @ForeignKey(name = "FK_CREDIT_CARD"))
     private CreditCard creditCard;
 
+    @Override
+    public String toString() {
+        return "Account: {client = " + client.getId() + ", name = '" + name +
+                ", balance = " + balance + ", status = " + status + ", iban = '" + iban +
+                ", creditCard = " + creditCard.getCardNumber() + '}';
+    }
 }

@@ -1,8 +1,8 @@
 package com.krukovska.paymentsystem.service.impl;
 
 import com.krukovska.paymentsystem.persistence.model.AccountStatus;
-import com.krukovska.paymentsystem.persistence.model.UnblockRequest;
 import com.krukovska.paymentsystem.persistence.model.Response;
+import com.krukovska.paymentsystem.persistence.model.UnblockRequest;
 import com.krukovska.paymentsystem.persistence.repository.RequestRepository;
 import com.krukovska.paymentsystem.service.AccountService;
 import com.krukovska.paymentsystem.service.ClientService;
@@ -11,8 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Collections;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.Optional;
 
@@ -53,7 +53,7 @@ public class UnblockRequestServiceImpl implements UnblockRequestService {
         var request = new UnblockRequest();
         request.setClient(client);
         request.setAccount(account);
-        request.setCreationDate(new Date());
+        request.setCreationDate(LocalDate.now());
 
         return new Response<>(requestRepository.save(request), new LinkedList<>());
     }
@@ -70,7 +70,7 @@ public class UnblockRequestServiceImpl implements UnblockRequestService {
         if (request == null) {
             return new Response<>(null, Collections.singletonList("Request doesn't exist"));
         }
-        request.setActionDate(new Date());
+        request.setActionDate(LocalDate.now());
 
         if (isAccepted) {
             request.getAccount().setStatus(AccountStatus.ACTIVE);

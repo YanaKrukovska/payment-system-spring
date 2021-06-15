@@ -45,8 +45,8 @@ public class UnblockRequestController {
     }
 
     @PostMapping("/accept/{requestId}")
-    public String acceptRequest(@PathVariable Long requestId) {
-        requestService.updateRequest(requestId, true);
+    public String acceptRequest(@PathVariable String requestId) {
+        requestService.updateRequest(Long.valueOf(requestId), true);
         return "redirect:/request/all";
     }
 

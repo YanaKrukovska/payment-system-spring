@@ -3,14 +3,12 @@ package com.krukovska.paymentsystem.persistence.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @Entity(name = "users")
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "email", name = "EMAIL_UNIQUE_CONSTRAINT"))
 public class User {
@@ -34,4 +32,11 @@ public class User {
     @OneToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "FK_USER_CLIENT_ID"))
     private Client client;
+
+    @Override
+    public String toString() {
+        return "User: {email = '" + email + ", name = '" + name +
+                ", password = '" + password + ", isAdmin = " + isAdmin +
+                ", client = " + client.getId() + '}';
+    }
 }

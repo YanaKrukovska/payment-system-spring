@@ -9,7 +9,6 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Entity(name = "clients")
 public class Client {
 
@@ -28,4 +27,9 @@ public class Client {
     @OneToMany(mappedBy = "client")
     private List<Account> accounts;
 
+    @Override
+    public String toString() {
+        return "Client: { user = " + user + ", status = " + status +
+                ", accounts = " + accounts + '}';
+    }
 }

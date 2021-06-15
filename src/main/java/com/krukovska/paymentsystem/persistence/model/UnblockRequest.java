@@ -3,15 +3,13 @@ package com.krukovska.paymentsystem.persistence.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @Entity(name = "unblock_requests")
 public class UnblockRequest {
 
@@ -28,10 +26,19 @@ public class UnblockRequest {
     private Account account;
 
     @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date creationDate;
+    private LocalDate creationDate;
 
     @Column()
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date actionDate;
+    private LocalDate actionDate;
+
+    @Override
+    public String toString() {
+        return "UnblockRequest{" +
+                "id=" + id +
+                ", client=" + client +
+                ", account=" + account +
+                ", creationDate=" + creationDate +
+                ", actionDate=" + actionDate +
+                '}';
+    }
 }
