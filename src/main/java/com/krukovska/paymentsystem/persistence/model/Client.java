@@ -29,7 +29,7 @@ public class Client {
 
     @Override
     public String toString() {
-        return "Client: { user = " + user + ", status = " + status +
+        return "Client: { status = " + status +
                 ", accounts = " + accounts + '}';
     }
 }

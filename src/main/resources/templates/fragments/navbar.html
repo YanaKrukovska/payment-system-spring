@@ -1,33 +1,34 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <nav th:fragment="navigation" class="navbar navbar-expand-sm navbar-dark bg-dark">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="/" th:text="#{navbar.navbarHeader}"></a>
+            <a class="navbar-brand" href="/welcome" th:text="#{navbar.navbarHeader}"></a>
         </div>
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="/account/all" th:text="#{navbar.accounts}"></a>
+            <li class="nav-item" sec:authorize="hasRole('CLIENT')">
+                <a class="nav-link" th:href="@{/account/all/{clientId}(clientId=${#authentication.getPrincipal().getClient().getId()})}"
+                   th:text="#{navbar.accounts}"></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" sec:authorize="hasRole('CLIENT')">
                 <a class="nav-link" href="/card/all" th:text="#{navbar.creditCards}"></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" sec:authorize="hasRole('CLIENT')">
                 <a class="nav-link" href="/payment/all" th:text="#{navbar.payments}"></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" sec:authorize="isAuthenticated()">
                 <a class="nav-link" href="/request/all" th:text="#{navbar.requests}"></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" sec:authorize="hasRole('ADMIN')">
                 <a class="nav-link" href="/client/all" th:text="#{navbar.clients}"></a>
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li>
+            <li sec:authorize="!isAuthenticated()">
                 <a class="nav-link" href="/login" th:text="#{navbar.login}"></a>
             </li>
-            <li>
+            <li sec:authorize="isAuthenticated()">
                 <a class="nav-link" href="/logout" th:text="#{navbar.logout}">L</a>
             </li>
             <li>

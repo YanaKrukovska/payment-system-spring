@@ -5,8 +5,6 @@ import com.krukovska.paymentsystem.persistence.model.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
-import java.util.Optional;
-
 public interface PaymentService {
 
     Page<Payment> findAllClientPayments(Long clientId, PageRequest pageRequest);

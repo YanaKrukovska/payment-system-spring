@@ -1,6 +1,9 @@
 package com.krukovska.paymentsystem.persistence.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -10,7 +13,6 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Entity(name = "payments")
 @Table(indexes = {@Index(columnList = "payment_date", name = "PAYMENT_DATE_INDEX"),
         @Index(columnList = "account_id", name = "PAYMENT_ACCOUNT_INDEX")})
@@ -39,4 +41,11 @@ public class Payment {
 
     @Column(nullable = false, name = "payment_date")
     private LocalDate paymentDate;
+
+    @Override
+    public String toString() {
+        return "Payment: {account = " + account.getId() + ", amount = " + amount + ", status = " + status +
+                ", receiverIban = '" + receiverIban + ", details = '" + details +
+                ", paymentDate = " + paymentDate + '}';
+    }
 }

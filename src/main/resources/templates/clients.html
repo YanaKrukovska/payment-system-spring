@@ -23,7 +23,10 @@
     <tr th:each="client : ${clientPage.content}">
         <td class="align-middle"><span class="align-middle" th:text="${client.id}"></span></td>
         <td class="align-middle"><span class="align-middle" th:text="${client.user.name}"></span></td>
-        <td class="align-middle"><span class="align-middle" th:text="${client.user.email}"></span></td>
+        <td class="align-middle">
+            <a th:href="@{/account/all/{clientId}(clientId=${client.id})}"
+               th:text="${client.user.email}" th:title="#{client.openAccounts}"></a>
+        </td>
         <td class="align-middle"><span class="align-middle" th:text="${client.status}"></span></td>
         <td>
             <form th:if="${client.status.name == 'ACTIVE'}"

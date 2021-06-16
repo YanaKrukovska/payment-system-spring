@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 
+import static com.krukovska.paymentsystem.util.Constants.ERROR_LABEL;
+
 @Controller
 public class ApplicationErrorController implements ErrorController {
 
@@ -19,7 +21,7 @@ public class ApplicationErrorController implements ErrorController {
             var statusCode = Integer.parseInt(status.toString());
             model.addAttribute("message",  HttpStatus.valueOf(statusCode));
         }
-        return "error";
+        return ERROR_LABEL;
     }
 
     @Override

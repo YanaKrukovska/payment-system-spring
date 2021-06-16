@@ -59,6 +59,13 @@ public class UnblockRequestServiceImpl implements UnblockRequestService {
     }
 
     @Override
+    public Page<UnblockRequest> findAllRequests(Optional<Integer> page, Optional<Integer> size) {
+        return requestRepository.findAll(PageRequest.of(page.orElse(DEFAULT_CURRENT_PAGE) - 1,
+                size.orElse(DEFAULT_PAGE_SIZE)));
+
+    }
+
+    @Override
     public Page<UnblockRequest> findAllClientRequests(Long clientId, Optional<Integer> page, Optional<Integer> size) {
         return requestRepository.findAllByClientId(clientId,
                 PageRequest.of(page.orElse(DEFAULT_CURRENT_PAGE) - 1, size.orElse(DEFAULT_PAGE_SIZE)));

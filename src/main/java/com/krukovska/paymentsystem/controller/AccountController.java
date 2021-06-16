@@ -2,8 +2,11 @@ package com.krukovska.paymentsystem.controller;
 
 import com.krukovska.paymentsystem.persistence.model.Account;
 import com.krukovska.paymentsystem.persistence.model.Response;
+import com.krukovska.paymentsystem.persistence.model.User;
 import com.krukovska.paymentsystem.service.impl.AccountServiceImpl;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.krukovska.paymentsystem.util.Constants.CLIENT_ID;
 import static com.krukovska.paymentsystem.util.ModelHelper.setSortingPaginationAttributes;
 import static com.krukovska.paymentsystem.util.PageRequestHelper.createPageRequest;
 
@@ -26,13 +28,15 @@ public class AccountController {
         this.accountService = accountService;
     }
 
-    @GetMapping(value = "/all")
-    public String allAccounts(Model model, @RequestParam("page") Optional<Integer> pageNumber,
+    @GetMapping(value = "/all/{clientId}")
+    @PreAuthorize("hasRole('ADMIN')" + "||  #clientId == authentication.principal.getClient().getId() ")
+    public String allAccounts(@PathVariable("clientId") Long clientId,
+                              Model model, @RequestParam("page") Optional<Integer> pageNumber,
                               @RequestParam("size") Optional<Integer> pageSize,
                               @RequestParam("sortField") Optional<String> sortField,
                               @RequestParam("sortDir") Optional<String> sortDir) {
 
-        Page<Account> accPage = accountService.findAllClientAccounts(CLIENT_ID, createPageRequest(pageNumber, pageSize, sortField, sortDir));
+        Page<Account> accPage = accountService.findAllClientAccounts(clientId, createPageRequest(pageNumber, pageSize, sortField, sortDir));
         model.addAttribute("accountPage", accPage);
         setSortingPaginationAttributes(model, pageNumber, sortField, sortDir, accPage);
         return "accounts";
@@ -79,8 +83,10 @@ public class AccountController {
             }
         }
 
+
         if (errors.isEmpty()) {
-            return "redirect:/account/all";
+            var user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            return "redirect:/account/all/" + user.getClient().getId();
         } else {
             model.addAttribute("errors", errors);
             return "account-topup";
@@ -95,8 +101,9 @@ public class AccountController {
             //TODO add localization
             errors.add("Account ID must be not empty");
         }
+        Response<Account> updateResponse = new Response<>();
         if (errors.isEmpty()) {
-            Response<Account> updateResponse = accountService.blockAccount(accountId);
+            updateResponse = accountService.blockAccount(accountId);
             if (updateResponse.hasErrors()) {
                 errors.addAll(updateResponse.getErrors());
             }
@@ -104,7 +111,8 @@ public class AccountController {
 
         model.addAttribute("errors", errors);
 
-        return "redirect:/account/all";
+
+        return "redirect:/account/all/" + updateResponse.getObject().getClient().getId();
     }
 
 

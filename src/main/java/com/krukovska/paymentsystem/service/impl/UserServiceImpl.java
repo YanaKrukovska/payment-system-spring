@@ -2,7 +2,6 @@ package com.krukovska.paymentsystem.service.impl;
 
 import com.krukovska.paymentsystem.persistence.model.User;
 import com.krukovska.paymentsystem.persistence.repository.UserRepository;
-import com.krukovska.paymentsystem.service.PasswordService;
 import com.krukovska.paymentsystem.service.UserService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,11 +11,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
 
-    private final PasswordService passwordService;
     private final UserRepository userRepository;
 
-    public UserServiceImpl(PasswordService passwordService, UserRepository userRepository) {
-        this.passwordService = passwordService;
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -26,8 +23,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        var user = findUserByEmail(s);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        var user = findUserByEmail(username);
 
         if (user == null) {
             throw new UsernameNotFoundException("User not found");

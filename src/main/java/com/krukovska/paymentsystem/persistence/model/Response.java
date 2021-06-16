@@ -1,9 +1,6 @@
 package com.krukovska.paymentsystem.persistence.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +8,7 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
 public class Response<T> {
 

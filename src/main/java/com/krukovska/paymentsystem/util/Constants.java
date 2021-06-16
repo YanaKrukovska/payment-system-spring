@@ -10,7 +10,7 @@ public class Constants {
     public static final String DEFAULT_REVERSE_SORTING_ORDER = "desc";
     public static final String DEFAULT_SORTING_FIELD = "id";
 
-    //TODO: remove hardcoded client id
-    public static final long CLIENT_ID = 2L;
-
+    public static final String ERROR_LABEL = "error";
+    public static final String LOGIN_LABEL = "login";
+    public static final String ACCOUNT_WITH_ID_LABEL = "Account with id ";
 }

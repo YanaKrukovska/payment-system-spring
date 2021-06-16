@@ -12,6 +12,8 @@ public interface UnblockRequestService {
 
     Response<UnblockRequest> createNewRequest(Long accountId, Long clientId);
 
+    Page<UnblockRequest> findAllRequests(Optional<Integer> page, Optional<Integer> size);
+
     Page<UnblockRequest> findAllClientRequests(Long clientId, Optional<Integer> page, Optional<Integer> size);
 
     Response<UnblockRequest> updateRequest(Long requestId, boolean isAccepted);

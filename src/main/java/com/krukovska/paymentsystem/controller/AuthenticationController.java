@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import static com.krukovska.paymentsystem.util.LabelConstants.ERROR_LABEL;
-import static com.krukovska.paymentsystem.util.LabelConstants.LOGIN_LABEL;
+import static com.krukovska.paymentsystem.util.Constants.ERROR_LABEL;
+import static com.krukovska.paymentsystem.util.Constants.LOGIN_LABEL;
 
 @Controller
 public class AuthenticationController {
@@ -25,11 +25,10 @@ public class AuthenticationController {
         this.passwordService = passwordService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/welcome")
     public String getMainPage() {
         return "index";
     }
-
 
     @GetMapping("/login")
     public String login(Model model) {
@@ -53,7 +52,7 @@ public class AuthenticationController {
             return LOGIN_LABEL;
         }
 
-        return "redirect:/";
+        return "redirect:/welcome";
     }
 
 }

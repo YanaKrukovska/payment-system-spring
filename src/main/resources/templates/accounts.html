@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml" >
 <head>
     <meta charset="UTF-8">
     <title th:text="#{navbar.accounts}"></title>
@@ -50,13 +51,13 @@
                                     th:href="@{/card/{cardNumber}(cardNumber=${account.creditCard.cardNumber})}"></a>
         </td>
         <td>
-            <form th:if="${account.status.name == 'ACTIVE'}"
+            <form sec:authorize="hasRole('CLIENT')" th:if="${account.status.name == 'ACTIVE'}"
                   th:action="@{/account/topup/{accountId}(accountId=${account.id})}" method="get">
                 <button type="submit" class="btn btn-success" th:text="#{account.topUp}"></button>
             </form>
         </td>
         <td>
-            <form th:if="${account.status.name == 'ACTIVE'}" th:action="@{/payment/add}" method="get">
+            <form sec:authorize="hasRole('CLIENT')" th:if="${account.status.name == 'ACTIVE'}" th:action="@{/payment/add}" method="get">
                 <input type="hidden" name="accountId" th:value="${account.id}">
                 <button type="submit" class="btn btn-primary" th:text="#{payment.create}"></button>
             </form>
@@ -68,7 +69,7 @@
             </form>
         </td>
         <td>
-            <form th:if="${account.status.name == 'BLOCKED'}"
+            <form sec:authorize="hasRole('CLIENT')" th:if="${account.status.name == 'BLOCKED'}"
                   th:action="@{/request/add/{accountId}(accountId=${account.id})}" method="post">
                 <button type="submit" class="btn btn-warning" th:text="#{general.unblock}"></button>
             </form>

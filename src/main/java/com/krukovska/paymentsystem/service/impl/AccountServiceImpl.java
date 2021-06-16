@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.LinkedList;
 
+import static com.krukovska.paymentsystem.util.Constants.ACCOUNT_WITH_ID_LABEL;
 import static java.util.Collections.singletonList;
 import static java.util.Objects.requireNonNull;
 
@@ -51,7 +52,7 @@ public class AccountServiceImpl implements AccountService {
         var account = findAccountById(accountId);
 
         if (account == null) {
-            return new Response<>(singletonList("Account with id " + accountId + " does not exists"));
+            return new Response<>(singletonList(ACCOUNT_WITH_ID_LABEL + accountId + " does not exists"));
         }
 
         account.setBalance(account.getBalance().add(BigDecimal.valueOf(amount)));
@@ -64,7 +65,7 @@ public class AccountServiceImpl implements AccountService {
         var account = findAccountById(accountId);
 
         if (account == null) {
-            return new Response<>(singletonList("Account with id " + accountId + " does not exist"));
+            return new Response<>(singletonList(ACCOUNT_WITH_ID_LABEL + accountId + " does not exist"));
         }
 
         if (account.getStatus() == AccountStatus.BLOCKED) {
@@ -85,7 +86,7 @@ public class AccountServiceImpl implements AccountService {
     public Response<Account> withdrawAmount(long accountId, BigDecimal amount) {
         var account = findAccountById(accountId);
         if (account == null) {
-            return new Response<>(singletonList("Account with id " + accountId + " does not exists"));
+            return new Response<>(singletonList(ACCOUNT_WITH_ID_LABEL + accountId + " does not exists"));
         }
 
         if (amount.compareTo(BigDecimal.ZERO) <= 0) {

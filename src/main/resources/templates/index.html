@@ -8,8 +8,7 @@
 </head>
 <body>
 <div th:replace="fragments/navbar.html :: navigation"></div>
-
-<h1 class="centered" style="text-align:center; margin-top: 10%" th:value="#{welcome.welcomeMessage}">
+<h1 class="centered" style="text-align:center; margin-top: 10%" th:text="#{welcome.welcomeMessage}">
 </h1>
 </body>
 </html>

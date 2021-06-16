@@ -2,7 +2,6 @@ package com.krukovska.paymentsystem.controller;
 
 import com.krukovska.paymentsystem.persistence.model.Client;
 import com.krukovska.paymentsystem.service.ClientService;
-import com.krukovska.paymentsystem.service.impl.ClientServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title th:text="#{navbar.requests}"></title>
@@ -29,7 +30,7 @@
         <td class="align-middle"><span class="align-middle" th:if="${request.actionDate != null}"
                                        th:text="${request.actionDate}"></span></td>
         <td>
-            <form th:if="${request.actionDate == null}"
+            <form sec:authorize="hasRole('ADMIN')" th:if="${request.actionDate == null}"
                   th:action="@{/request/accept/{requestId}(requestId=${request.id})}" method="post">
                 <button type="submit" class="btn btn-success" th:text="#{request.accept}"></button>
             </form>
