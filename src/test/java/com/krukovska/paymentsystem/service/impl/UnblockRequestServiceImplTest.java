@@ -41,6 +41,12 @@ class UnblockRequestServiceImplTest {
     }
 
     @Test
+    void findAllRequests() {
+        service.findAllRequests(Optional.of(1), Optional.of(3));
+        verify(repo, times(1)).findAll(any(PageRequest.class));
+    }
+
+    @Test
     void findAllRequestsByClient() {
         service.findAllClientRequests(1L, Optional.of(1), Optional.of(3));
         verify(repo, times(1)).findAllByClientId(anyLong(), any(PageRequest.class));
