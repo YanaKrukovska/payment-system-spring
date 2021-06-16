@@ -2,7 +2,9 @@ package com.krukovska.paymentsystem.controller;
 
 import com.krukovska.paymentsystem.persistence.model.Payment;
 import com.krukovska.paymentsystem.persistence.model.PaymentStatus;
+import com.krukovska.paymentsystem.persistence.model.Response;
 import com.krukovska.paymentsystem.persistence.model.User;
+import com.krukovska.paymentsystem.service.PaymentProcessingException;
 import com.krukovska.paymentsystem.service.impl.AccountServiceImpl;
 import com.krukovska.paymentsystem.service.impl.PaymentServiceImpl;
 import org.springframework.data.domain.Page;
@@ -15,6 +17,7 @@ import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Optional;
 
+import static com.krukovska.paymentsystem.util.Constants.ERROR_LABEL;
 import static com.krukovska.paymentsystem.util.ModelHelper.setSortingPaginationAttributes;
 import static com.krukovska.paymentsystem.util.PageRequestHelper.createPageRequest;
 
@@ -74,8 +77,19 @@ public class PaymentController {
     }
 
     @PostMapping("/send/{paymentId}")
-    public String sendPayment(@PathVariable Long paymentId) {
-        paymentService.send(paymentId);
+    public String sendPayment(@PathVariable Long paymentId, Model model) {
+        try {
+            Response<Payment> sendResponse = paymentService.send(paymentId);
+
+            if (sendResponse.hasErrors()) {
+                model.addAttribute("message", sendResponse.getErrors());
+                return ERROR_LABEL;
+            }
+
+        } catch (PaymentProcessingException e) {
+            model.addAttribute("message", e.getMessage());
+            return ERROR_LABEL;
+        }
         return "redirect:/payment/all";
     }
 }
